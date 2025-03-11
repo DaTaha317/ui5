@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+    xmlns:custom="ui5.controls"
 >
     <VBox>
         <Label
@@ -30,5 +31,33 @@
                 </ColumnListItem>
             </suggestionRows>
         </MultiInput>
+
+        <Label
+            text="Suppliers"
+            labelFor="valueHelperSupplier"
+        />
+        <custom:ValueHelperWrapper
+            id="valueHelperSupplier"
+            modelName=""
+            entitySet="/Suppliers"
+            codeBinding="SupplierID"
+            codeLabel="Supplier testing Id"
+            descBinding="CompanyName"
+            descLabel="Company testing Name"
+        />
+
+        <Label
+            text="Products"
+            labelFor="valueHelperProduct"
+        />
+        <custom:ValueHelperWrapper
+            id="valueHelperProduct"
+            modelName=""
+            entitySet="/Products"
+            codeBinding="ProductID"
+            codeLabel="Product ID"
+            descBinding="ProductName"
+            descLabel="Product Name"
+        />
     </VBox>
 </mvc:View>
