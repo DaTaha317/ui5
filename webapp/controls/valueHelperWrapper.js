@@ -72,6 +72,10 @@ sap.ui.define(
 
             this.addDependent(oDialog);
 
+            // Set the key and descriptionKey programmatically
+            this._oVHD.setKey(this._oConfig.selectedKey);
+            this._oVHD.setDescriptionKey(this._oConfig.selectedDescription);
+
             // Once I better understand the concept of renges, I will refactor it to account for the dynamic nautre of fields
             // Set key fields for filtering in the Define Conditions Tab
             // oDialog.setRangeKeyFields([

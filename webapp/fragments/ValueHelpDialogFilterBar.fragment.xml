@@ -10,8 +10,6 @@
         cancel=".onValueHelpCancelPress"
         afterClose=".onValueHelpAfterClose"
         supportRanges="true"
-        key="{metadataModel>/codeBinding}"
-        descriptionKey="{metadataModel>/descBinding}"
     >
         <filterBar>
             <fb:FilterBar

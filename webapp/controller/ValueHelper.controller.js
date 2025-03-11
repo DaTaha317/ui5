@@ -14,7 +14,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
             { code: "SupplierID", label: "Supplier Id" },
             { code: "CompanyName", label: "Company Name" },
             { code: "Country", label: "Country" }
-          ]
+          ],
+          selectedKey: "SupplierID",
+          selectedDescription: "CompanyName"
         },
         EmployeeConfig: {
           entitySet: "/Employees",
@@ -23,7 +25,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
             { code: "FirstName", label: "First Name" },
             { code: "LastName", label: "Last Name" },
             { code: "BirthDate", label: "Birth Date" }
-          ]
+          ],
+          selectedKey: "EmployeeID",
+          selectedDescription: "LastName"
         }
       });
 
