@@ -33,45 +33,12 @@
         </MultiInput>
 
         <Label
-            text="Suppliers"
+            text="Products"
             labelFor="valueHelperSupplier"
         />
         <custom:ValueHelperWrapper
             id="valueHelperSupplier"
-            modelName=""
-            entitySet="/Suppliers"
-            codeBinding="SupplierID"
-            codeLabel="Supplier testing Id"
-            descBinding="CompanyName"
-            descLabel="Company testing Name"
-        />
-
-        <Label
-            text="Products"
-            labelFor="valueHelperProduct"
-        />
-        <custom:ValueHelperWrapper
-            id="valueHelperProduct"
-            modelName=""
-            entitySet="/Products"
-            codeBinding="ProductID"
-            codeLabel="Product ID"
-            descBinding="ProductName"
-            descLabel="Product Name"
-        />
-
-        <Label
-            text="Shippers"
-            labelFor="valueHelperProduct"
-        />
-        <custom:ValueHelperWrapper
-            id="valueHelperShippers"
-            modelName=""
-            entitySet="/Shippers"
-            codeBinding="ShipperID"
-            codeLabel="Shipper ID"
-            descBinding="CompanyName"
-            descLabel="Company Name"
+            config="{viewModel>/valueHelperConfig}"
         />
     </VBox>
 </mvc:View>

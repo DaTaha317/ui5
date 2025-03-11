@@ -34,12 +34,7 @@ sap.ui.define(
     return Control.extend("ui5.controls.ValueHelperWrapper", {
       metadata: {
         properties: {
-          modelName: { type: "string", defaultValue: "" },
-          entitySet: { type: "string", defaultValue: "" },
-          codeBinding: { type: "string", defaultValue: "" },
-          codeLabel: { type: "string", defaultValue: "" },
-          descBinding: { type: "string", defaultValue: "" },
-          descLabel: { type: "string", defaultValue: "" }
+          config: { type: "object", defaultValue: {} }
         },
         aggregations: {
           _multiInput: {
@@ -61,11 +56,21 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
+        this._oConfig = this.getConfig() || {};
+        console.log("Config:", this._oConfig);
+        console.log("entityset:", this._oConfig.entitySet);
+
+        // Access the fields inside the config
+        const aFields = this._oConfig.fields || [];
+        console.log("Fields:", aFields);
+
+        console.log("first field code:", aFields[0].code);
+
         var oFragmentMetadata = {
-          codeBinding: this.getCodeBinding(),
-          codeLabel: this.getCodeLabel(),
-          descBinding: this.getDescBinding(),
-          descLabel: this.getDescLabel()
+          codeBinding: this._oConfig.fields[0].code,
+          codeLabel: this._oConfig.fields[0].label,
+          descBinding: this._oConfig.fields[1].code,
+          descLabel: this._oConfig.fields[1].label
         };
 
         var oFragmentMetadataModel = new sap.ui.model.json.JSONModel(
@@ -81,9 +86,7 @@ sap.ui.define(
           controller: this
         }).then(
           function (oDialog) {
-            var oFilterBar = oDialog.getFilterBar(),
-              oColumnProductCode,
-              oColumnProductName;
+            var oFilterBar = oDialog.getFilterBar();
             this._oVHD = oDialog;
 
             this.addDependent(oDialog);
@@ -91,8 +94,8 @@ sap.ui.define(
             // Set key fields for filtering in the Define Conditions Tab
             oDialog.setRangeKeyFields([
               {
-                label: this.getCodeLabel(),
-                key: this.getCodeBinding(),
+                label: this._oConfig.fields[0].label,
+                key: this._oConfig.fields[0].code,
                 type: "string",
                 typeInstance: new TypeString(
                   {},
@@ -116,71 +119,51 @@ sap.ui.define(
               function (oTable) {
                 oTable.setModel(this.oModel);
 
-                // For Desktop and tabled the default table is sap.ui.table.Table
+                // For Desktop and Tablet (sap.ui.table.Table)
                 if (oTable.bindRows) {
-                  // Bind rows to the ODataModel and add columns
                   oTable.bindAggregation("rows", {
-                    path: this.getEntitySet(),
+                    path: this._oConfig.entitySet,
                     events: {
                       dataReceived: function () {
                         oDialog.update();
                       }
                     }
                   });
-                  oColumnProductCode = new UIColumn({
-                    label: new Label({
-                      text: this.getCodeLabel()
-                    }),
-                    template: new Text({
-                      wrapping: false,
-                      text: {
-                        path: this.getCodeBinding(),
-                        formatter: this.getCodeBinding()
-                      }
-                    })
+
+                  // Loop through fields and create columns dynamically
+                  this._oConfig.fields.forEach((field) => {
+                    let oColumn = new UIColumn({
+                      label: new Label({
+                        text: field.label
+                      }),
+                      template: new Text({
+                        wrapping: false,
+                        text: {
+                          path: field.code,
+                          formatter: field.code
+                        }
+                      })
+                    });
+
+                    oColumn.data({ fieldName: field.code });
+                    oTable.addColumn(oColumn);
                   });
-                  oColumnProductCode.data({
-                    fieldName: this.getCodeBinding()
-                  });
-                  oColumnProductName = new UIColumn({
-                    label: new Label({
-                      text: this.getDescLabel()
-                    }),
-                    template: new Text({
-                      wrapping: false,
-                      text: {
-                        path: this.getDescBinding(),
-                        formatter: this.getDescBinding()
-                      }
-                    })
-                  });
-                  oColumnProductName.data({
-                    fieldName: this.getDescBinding()
-                  });
-                  oTable.addColumn(oColumnProductCode);
-                  oTable.addColumn(oColumnProductName);
                 }
 
-                // For Mobile the default table is sap.m.Table
+                // For Mobile (sap.m.Table)
                 if (oTable.bindItems) {
-                  // Bind items to the ODataModel and add columns
                   oTable.bindAggregation("items", {
-                    path: this.getEntitySet(),
+                    path: this._oConfig.entitySet,
                     template: new ColumnListItem({
-                      cells: [
-                        new Label({
-                          text: {
-                            path: this.getCodeBinding(),
-                            formatter: this.getCodeBinding()
-                          }
-                        }),
-                        new Label({
-                          text: {
-                            path: this.getDescBinding(),
-                            formatter: this.getDescBinding()
-                          }
-                        })
-                      ]
+                      cells: this._oConfig.fields.map(
+                        (field) =>
+                          new Label({
+                            text: {
+                              path: field.code,
+                              formatter: field.code
+                            }
+                          })
+                      )
                     }),
                     events: {
                       dataReceived: function () {
@@ -188,21 +171,19 @@ sap.ui.define(
                       }
                     }
                   });
-                  oTable.addColumn(
-                    new MColumn({
-                      header: new Label({
-                        text: this.getCodeLabel()
+
+                  // Loop through fields and create mobile table columns dynamically
+                  this._oConfig.fields.forEach((field) => {
+                    oTable.addColumn(
+                      new MColumn({
+                        header: new Label({
+                          text: field.label
+                        })
                       })
-                    })
-                  );
-                  oTable.addColumn(
-                    new MColumn({
-                      header: new Label({
-                        text: this.getDescLabel()
-                      })
-                    })
-                  );
+                    );
+                  });
                 }
+
                 oDialog.update();
               }.bind(this)
             );
@@ -235,12 +216,12 @@ sap.ui.define(
           new Filter({
             filters: [
               new Filter({
-                path: this.getCodeBinding(),
+                path: this._oConfig.fields[0].code,
                 operator: FilterOperator.Contains,
                 value1: sSearchQuery
               }),
               new Filter({
-                path: this.getDescBinding(),
+                path: this._oConfig.fields[1].code,
                 operator: FilterOperator.Contains,
                 value1: sSearchQuery
               })

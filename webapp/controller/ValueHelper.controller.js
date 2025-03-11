@@ -51,6 +51,19 @@ sap.ui.define(
           oFragmentMetadata
         );
         this.getView().setModel(oFragmentMetadataModel, "metadataModel");
+
+        var oModel = new sap.ui.model.json.JSONModel({
+          valueHelperConfig: {
+            entitySet: "/Suppliers",
+            fields: [
+              { code: "SupplierID", label: "Supplier Id" },
+              { code: "CompanyName", label: "Company Name" },
+              { code: "Country", label: "Country" }
+            ]
+          }
+        });
+
+        this.getView().setModel(oModel, "viewModel");
       },
       /********************* End Life Cycle Methods *****************************/
 
