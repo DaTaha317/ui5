@@ -61,8 +61,17 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
-        // Loads the view after rendering to allow adding dependants after the controller have fully loaded
-        this._oView = this._getView();
+        var oFragmentMetadata = {
+          codeBinding: this.getCodeBinding(),
+          codeLabel: this.getCodeLabel(),
+          descBinding: this.getDescBinding(),
+          descLabel: this.getDescLabel()
+        };
+
+        var oFragmentMetadataModel = new sap.ui.model.json.JSONModel(
+          oFragmentMetadata
+        );
+        this.setModel(oFragmentMetadataModel, "metadataModel");
       },
       /********************* Begin Value Help Dialog *****************************/
       onValueHelpRequested: function () {
@@ -77,13 +86,13 @@ sap.ui.define(
               oColumnProductName;
             this._oVHD = oDialog;
 
-            this._oView.addDependent(oDialog);
+            this.addDependent(oDialog);
 
             // Set key fields for filtering in the Define Conditions Tab
             oDialog.setRangeKeyFields([
               {
-                label: "Product",
-                key: "ProductCode",
+                label: this.getCodeLabel(),
+                key: this.getCodeBinding(),
                 type: "string",
                 typeInstance: new TypeString(
                   {},
@@ -296,17 +305,6 @@ sap.ui.define(
           // This method must be called after binding update of the table.
           oVHD.update();
         });
-      },
-
-      _getView: function () {
-        var oParent = this.getParent();
-        while (oParent) {
-          if (oParent instanceof sap.ui.core.mvc.View) {
-            return oParent;
-          }
-          oParent = oParent.getParent();
-        }
-        return null;
       },
 
       /********************* End Internal helper methods *****************************/

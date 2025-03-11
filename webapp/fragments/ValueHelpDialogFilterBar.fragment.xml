@@ -10,8 +10,8 @@
         cancel=".onValueHelpCancelPress"
         afterClose=".onValueHelpAfterClose"
         supportRanges="true"
-        key="SupplierID"
-        descriptionKey="CompanyName"
+        key="{metadataModel>/codeBinding}"
+        descriptionKey="{metadataModel>/descBinding}"
     >
         <filterBar>
             <fb:FilterBar
@@ -22,22 +22,22 @@
                 <fb:filterGroupItems>
                     <fb:FilterGroupItem
                         groupName="__$INTERNAL$"
-                        name="SupplierID"
-                        label="Supplier Id"
+                        name="codeBinding"
+                        label="{metadataModel>/codeLabel}"
                         visibleInFilterBar="true"
                     >
                         <fb:control>
-                            <m:Input name="SupplierID" />
+                            <m:Input name="{metadataModel>/codeBinding}" />
                         </fb:control>
                     </fb:FilterGroupItem>
                     <fb:FilterGroupItem
                         groupName="__$INTERNAL$"
-                        name="CompanyName"
-                        label="Company Name"
+                        name="descBinding"
+                        label="{metadataModel>/descLabel}"
                         visibleInFilterBar="true"
                     >
                         <fb:control>
-                            <m:Input name="CompanyName" />
+                            <m:Input name="{metadataModel>descBinding}" />
                         </fb:control>
                     </fb:FilterGroupItem>
                 </fb:filterGroupItems>

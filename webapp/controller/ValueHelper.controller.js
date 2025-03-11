@@ -39,6 +39,18 @@ sap.ui.define(
         oMultiInput = this.byId("multiInput");
         oMultiInput.addValidator(this._onMultiInputValidate);
         this._oMultiInput = oMultiInput;
+
+        var oFragmentMetadata = {
+          codeBinding: "SupplierID",
+          codeLabel: "Supplier Id",
+          descBinding: "CompanyName",
+          descLabel: "Company Name"
+        };
+
+        var oFragmentMetadataModel = new sap.ui.model.json.JSONModel(
+          oFragmentMetadata
+        );
+        this.getView().setModel(oFragmentMetadataModel, "metadataModel");
       },
       /********************* End Life Cycle Methods *****************************/
 
@@ -59,8 +71,8 @@ sap.ui.define(
             // Set key fields for filtering in the Define Conditions Tab
             oDialog.setRangeKeyFields([
               {
-                label: "Product",
-                key: "ProductCode",
+                label: "Supplier Id",
+                key: "SupplierID",
                 type: "string",
                 typeInstance: new TypeString(
                   {},

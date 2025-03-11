@@ -7,7 +7,7 @@
 >
     <VBox>
         <Label
-            text="Companies"
+            text="Companies (Regular from controller)"
             labelFor="multiInput"
         />
         <MultiInput
@@ -58,6 +58,20 @@
             codeLabel="Product ID"
             descBinding="ProductName"
             descLabel="Product Name"
+        />
+
+        <Label
+            text="Shippers"
+            labelFor="valueHelperProduct"
+        />
+        <custom:ValueHelperWrapper
+            id="valueHelperShippers"
+            modelName=""
+            entitySet="/Shippers"
+            codeBinding="ShipperID"
+            codeLabel="Shipper ID"
+            descBinding="CompanyName"
+            descLabel="Company Name"
         />
     </VBox>
 </mvc:View>
