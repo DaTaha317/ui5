@@ -1,0 +1,34 @@
+<mvc:View
+    controllerName="ui5.controller.ValueHelper"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <VBox>
+        <Label
+            text="Companies"
+            labelFor="multiInput"
+        />
+        <MultiInput
+            id="multiInput"
+            width="600px"
+            valueHelpRequest=".onValueHelpRequested"
+            suggestionRows="{ path: '/Suppliers', length: 10 }"
+        >
+            <suggestionColumns>
+                <Column>
+                    <Label text="Supplier Id" />
+                </Column>
+                <Column>
+                    <Label text="Company Name" />
+                </Column>
+            </suggestionColumns>
+            <suggestionRows>
+                <ColumnListItem>
+                    <Label text="{SupplierID}" />
+                    <Label text="{CompanyName}" />
+                </ColumnListItem>
+            </suggestionRows>
+        </MultiInput>
+    </VBox>
+</mvc:View>

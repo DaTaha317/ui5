@@ -1,0 +1,7 @@
+/* Enter your custom styles here */
+
+.sapUiView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
