@@ -7,38 +7,12 @@
 >
     <VBox>
         <Label
-            text="Companies (Regular from controller)"
-            labelFor="multiInput"
-        />
-        <MultiInput
-            id="multiInput"
-            width="600px"
-            valueHelpRequest=".onValueHelpRequested"
-            suggestionRows="{ path: '/Suppliers', length: 10 }"
-        >
-            <suggestionColumns>
-                <Column>
-                    <Label text="Supplier Id" />
-                </Column>
-                <Column>
-                    <Label text="Company Name" />
-                </Column>
-            </suggestionColumns>
-            <suggestionRows>
-                <ColumnListItem>
-                    <Label text="{SupplierID}" />
-                    <Label text="{CompanyName}" />
-                </ColumnListItem>
-            </suggestionRows>
-        </MultiInput>
-
-        <Label
-            text="Products"
+            text="Suppliers"
             labelFor="valueHelperSupplier"
         />
         <custom:ValueHelperWrapper
             id="valueHelperSupplier"
-            config="{viewModel>/valueHelperConfig}"
+            config="{viewModel>/SupplierConfig}"
         />
     </VBox>
 </mvc:View>
