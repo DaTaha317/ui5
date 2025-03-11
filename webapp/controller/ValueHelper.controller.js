@@ -3,7 +3,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
 
   return Controller.extend("ui5.controller.ValueHelper", {
     oDefaultModel: "",
-    /********************* Begin Life Cycle Methods *****************************/
     onInit: function () {
       this.oDefaultModel = this.getOwnerComponent().getModel();
       this.getView().setModel(this.oDefaultModel);
@@ -16,11 +15,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
             { code: "CompanyName", label: "Company Name" },
             { code: "Country", label: "Country" }
           ]
+        },
+        EmployeeConfig: {
+          entitySet: "/Employees",
+          fields: [
+            { code: "EmployeeID", label: "Employee Id" },
+            { code: "FirstName", label: "First Name" },
+            { code: "LastName", label: "Last Name" },
+            { code: "BirthDate", label: "Birth Date" }
+          ]
         }
       });
 
       this.getView().setModel(oModel, "viewModel");
     }
-    /********************* End Life Cycle Methods *****************************/
   });
 });

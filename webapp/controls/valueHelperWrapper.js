@@ -56,27 +56,8 @@ sap.ui.define(
       },
 
       onAfterRendering: function () {
+        this._oView = this._getView();
         this._oConfig = this.getConfig() || {};
-        console.log("Config:", this._oConfig);
-        console.log("entityset:", this._oConfig.entitySet);
-
-        // Access the fields inside the config
-        const aFields = this._oConfig.fields || [];
-        console.log("Fields:", aFields);
-
-        console.log("first field code:", aFields[0].code);
-
-        var oFragmentMetadata = {
-          codeBinding: this._oConfig.fields[0].code,
-          codeLabel: this._oConfig.fields[0].label,
-          descBinding: this._oConfig.fields[1].code,
-          descLabel: this._oConfig.fields[1].label
-        };
-
-        var oFragmentMetadataModel = new sap.ui.model.json.JSONModel(
-          oFragmentMetadata
-        );
-        this.setModel(oFragmentMetadataModel, "metadataModel");
       },
       /********************* Begin Value Help Dialog *****************************/
       onValueHelpRequested: function () {
@@ -91,20 +72,37 @@ sap.ui.define(
 
             this.addDependent(oDialog);
 
+            // Once I better understand the concept of renges, I will refactor it to account for the dynamic nautre of fields
             // Set key fields for filtering in the Define Conditions Tab
-            oDialog.setRangeKeyFields([
-              {
-                label: this._oConfig.fields[0].label,
-                key: this._oConfig.fields[0].code,
-                type: "string",
-                typeInstance: new TypeString(
-                  {},
-                  {
-                    maxLength: 7
-                  }
-                )
-              }
-            ]);
+            // oDialog.setRangeKeyFields([
+            //   {
+            //     label: this._oConfig.fields[0].label,
+            //     key: this._oConfig.fields[0].code,
+            //     type: "string",
+            //     typeInstance: new TypeString(
+            //       {},
+            //       {
+            //         maxLength: 7
+            //       }
+            //     )
+            //   }
+            // ]);
+
+            // Set key fields for filtering
+
+            if (oFilterBar && this._oConfig.fields) {
+              this._oConfig.fields.forEach(function (field) {
+                var oFilterGroupItem =
+                  new sap.ui.comp.filterbar.FilterGroupItem({
+                    groupName: "__$INTERNAL$",
+                    name: field.code,
+                    label: field.label,
+                    visibleInFilterBar: true,
+                    control: new sap.m.Input({ name: field.code })
+                  });
+                oFilterBar.addFilterGroupItem(oFilterGroupItem);
+              });
+            }
 
             // Set Basic Search for FilterBar
             oFilterBar.setFilterBarExpanded(false);
@@ -254,6 +252,18 @@ sap.ui.define(
       /********************* End Value Help Dialog  *****************************/
 
       /********************* Begin Internal helper methods *****************************/
+
+      _getView: function () {
+        var oParent = this.getParent();
+        while (oParent) {
+          if (oParent instanceof sap.ui.core.mvc.View) {
+            return oParent;
+          }
+          oParent = oParent.getParent();
+        }
+        return null;
+      },
+
       _onMultiInputValidate: function (oArgs) {
         var sWhitespace = " ",
           sUnicodeWhitespaceCharacter = "\u00A0"; // Non-breaking whitespace

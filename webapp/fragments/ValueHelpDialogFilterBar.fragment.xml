@@ -15,32 +15,12 @@
     >
         <filterBar>
             <fb:FilterBar
+                id="filterBarId"
                 advancedMode="true"
                 search=".onFilterBarSearch"
                 isRunningInValueHelpDialog="true"
             >
-                <fb:filterGroupItems>
-                    <fb:FilterGroupItem
-                        groupName="__$INTERNAL$"
-                        name="codeBinding"
-                        label="{metadataModel>/codeLabel}"
-                        visibleInFilterBar="true"
-                    >
-                        <fb:control>
-                            <m:Input name="{metadataModel>/codeBinding}" />
-                        </fb:control>
-                    </fb:FilterGroupItem>
-                    <fb:FilterGroupItem
-                        groupName="__$INTERNAL$"
-                        name="descBinding"
-                        label="{metadataModel>/descLabel}"
-                        visibleInFilterBar="true"
-                    >
-                        <fb:control>
-                            <m:Input name="{metadataModel>descBinding}" />
-                        </fb:control>
-                    </fb:FilterGroupItem>
-                </fb:filterGroupItems>
+                <fb:filterGroupItems />
             </fb:FilterBar>
         </filterBar>
     </ValueHelpDialog>

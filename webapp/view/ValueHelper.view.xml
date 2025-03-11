@@ -14,5 +14,14 @@
             id="valueHelperSupplier"
             config="{viewModel>/SupplierConfig}"
         />
+
+        <Label
+            text="Emplopyee"
+            labelFor="valueHelperEmplopyee"
+        />
+        <custom:ValueHelperWrapper
+            id="valueHelperEmplopyee"
+            config="{viewModel>/EmployeeConfig}"
+        />
     </VBox>
 </mvc:View>
