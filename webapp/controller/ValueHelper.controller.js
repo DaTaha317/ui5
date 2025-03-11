@@ -16,7 +16,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
             { code: "Country", label: "Country" }
           ],
           selectedKey: "SupplierID",
-          selectedDescription: "CompanyName"
+          selectedDescription: "CompanyName",
+          selectionMode: "Single"
         },
         EmployeeConfig: {
           entitySet: "/Employees",

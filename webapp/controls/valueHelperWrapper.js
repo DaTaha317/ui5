@@ -120,6 +120,7 @@ sap.ui.define(
             oDialog.getTableAsync().then(
               function (oTable) {
                 oTable.setModel(this.oModel);
+                oTable.setSelectionMode(this._oConfig.selectionMode);
 
                 // For Desktop and Tablet (sap.ui.table.Table)
                 if (oTable.bindRows) {
