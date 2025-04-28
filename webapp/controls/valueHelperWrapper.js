@@ -44,7 +44,7 @@ sap.ui.define(
           }
         },
         events: {
-          valueSelected: {
+          selectionChange: {
             parameters: {
               selectedTokens: { type: "sap.m.Token[]" }
             }
@@ -254,7 +254,7 @@ sap.ui.define(
         this._oVHD.close();
 
         //  Fire the custom event with selected tokens
-        this.fireValueSelected({
+        this.fireSelectionChange({
           selectedTokens: aTokens
         });
       },
