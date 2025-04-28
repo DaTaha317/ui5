@@ -42,6 +42,13 @@ sap.ui.define(
             multiple: false,
             visibility: "hidden"
           }
+        },
+        events: {
+          valueSelected: {
+            parameters: {
+              selectedTokens: { type: "sap.m.Token[]" }
+            }
+          }
         }
       },
 
@@ -245,6 +252,11 @@ sap.ui.define(
         var aTokens = oEvent.getParameter("tokens");
         this._oMultiInput.setTokens(aTokens);
         this._oVHD.close();
+
+        //  Fire the custom event with selected tokens
+        this.fireValueSelected({
+          selectedTokens: aTokens
+        });
       },
 
       onValueHelpCancelPress: function () {

@@ -13,6 +13,7 @@
         <custom:ValueHelperWrapper
             id="valueHelperSupplier"
             config="{viewModel>/SupplierConfig}"
+            valueSelected="onSupplierSelected"
         />
 
         <Label

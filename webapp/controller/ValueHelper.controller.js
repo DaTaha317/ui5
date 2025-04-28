@@ -33,6 +33,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller"], function (Controller) {
       });
 
       this.getView().setModel(oModel, "viewModel");
+    },
+
+    onSupplierSelected: function (oEvent) {
+      var aTokens = oEvent.getParameter("selectedTokens");
+      console.log("Tokens selected:", aTokens);
     }
   });
 });
